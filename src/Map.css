@@ -1,0 +1,18 @@
+.map-container {
+    height: 300px;
+    z-index: 0;
+  }
+
+  .leaflet-container {
+    height: 100%;
+    width: 100%;
+    border-radius: 8px;
+}
+
+.leaflet-popup-content-wrapper {
+    border-radius: 8px;
+}
+
+.leaflet-popup-tip {
+    display: none;
+}

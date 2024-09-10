@@ -1,0 +1,24 @@
+.custom-icon {
+    border: 2px solid whitesmoke; /* Adjust border width */
+    border-radius: 50%; /* Ensures the border follows a circular shape */
+    box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.5); /* Shadow for the marker */
+    display: inline-flex; /* Ensures the SVG is centered within the border */
+    align-items: center; /* Centers the SVG */
+    justify-content: center; /* Centers the SVG */
+    animation: pulse 1.5s infinite; /* Apply pulse animation */
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.5);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
