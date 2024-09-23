@@ -15,18 +15,18 @@ const Search = ({ onSearch }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="flex items-center mr-4 rounded">
+        <form onSubmit={handleSubmit} className="flex items-center rounded-lg p-2">
             <input 
                 type="text" 
                 value={query} 
                 onChange={handleInputChange} 
                 placeholder="Masukkan..." 
-                className="flex-grow p-2 rounded-[10px] border border-gray-400 w-[18em]" 
+                className="flex-grow p-2 rounded-l-lg w-[20em] mt-2 border border-gray-300 focus:outline-none focus:border-blue-500 transition duration-200" 
                 aria-label="Search" 
             />
             <button 
                 type="submit" 
-                className="bg-blue-700 text-white w-[5em] p-2 ml-1 rounded-lg hover:bg-blue-500 hover:shadow-lg transition-colors"
+                className="bg-blue-700 text-white py-2 px-4 mt-2 rounded-r-lg hover:bg-blue-600 hover:shadow-lg transition-colors"
             >
                 Cari
             </button>

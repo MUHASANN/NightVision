@@ -69,20 +69,21 @@ const Banner = () => {
   };
 
   return (
-    <div className="p-6 mt-4 w-full h-full bg-gray-200">
+    <div className="p-4 mt-2 w-full h-full bg-gray-200">
       <div className="flex justify-center">
         <div className="bg-white rounded-lg shadow-lg p-4 w-full max-w-xmd flex items-center">
           <FaDesktop className="text-blue-900 w-[50px] h-[50px] ml-3 mb-1" />
           <span className="ml-4 mb-1 text-[25px] text-gray-700 font-semibold hover:text-gray-500">
             PERANGKAT
           </span>
+          <div className="ml-2 mr-2">
           <select
             value={selectedCategory}
             onChange={(e) => {
               setSelectedCategory(e.target.value);
-              setCurrentPage(1); // Reset ke halaman pertama setiap kali kategori berubah
+              setCurrentPage(1);
             }}
-            className="ml-4 p-2 border border-gray-400 rounded-lg"
+            className="p-2 border border-gray-400 rounded-lg"
           >
             {CATEGORIES.map((category) => (
               <option key={category} value={category}>
@@ -90,7 +91,8 @@ const Banner = () => {
               </option>
             ))}
           </select>
-          <div className="relative ml-[30em] top-3 w-[500px]">
+          </div>
+          <div className="relative ml-[32em] top-2 w-[350px]">
             <input
               type="text"
               placeholder="Cari nama perangkat..."

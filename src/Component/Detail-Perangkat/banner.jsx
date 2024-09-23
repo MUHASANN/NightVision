@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import Carddetail from "./card";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { FaCamera } from "react-icons/fa";
+import { FaCameraRetro } from "react-icons/fa";
 import notFoundImage from "../../../public/404.png";
 import {
   getDataHistory,
@@ -114,13 +114,6 @@ const Banner = () => {
     );
   }
 
-  // if (deviceData.length === 0) {
-  //   return (
-  //     <div className="flex justify-center p-10">
-  //       <div>No device data available.</div>
-  //     </div>
-  //   );
-  // }
   const renderCards = historyData.map((history, index) => {
     const guidDevice = history.guid_device;
     const leftCardImage = history.value || notFoundImage;
@@ -132,10 +125,8 @@ const Banner = () => {
         key={index}
         guid_device={guidDevice}
         type={device.type}
-        // leftcard={<img src={`https://smartparking.pptik.id/data/data/${leftCardImage}`} alt="Device" className="w-full h-[200px] object-cover rounded-lg" />}
-        // leftcard2={<img src={`https://smartparking.pptik.id/data/data/${leftCardImage}`} alt="Device" className="w-full h-[200px] object-cover rounded-lg" />}
         leftcard={
-          <div className="p-4 bg-gray-50 rounded-lg shadow-md">
+          <div className="p-4 w-72 bg-white rounded-lg shadow-sm">
             <h3 className="text-md font-semibold mb-2">Data Terakhir</h3>
             <img
               src={`https://smartparking.pptik.id/data/data/${leftCardImage}`}
@@ -151,7 +142,7 @@ const Banner = () => {
           </div>
         }
         leftcard2={
-          <div className="p-4 bg-gray-50 rounded-lg shadow-md">
+          <div className="p-4 w-72 bg-white rounded-lg shadow-sm">
             <h3 className="text-md font-semibold mb-2">Data Realtime</h3>
             <img
               src={`https://smartparking.pptik.id/data/data/${
@@ -175,12 +166,12 @@ const Banner = () => {
             <span className="text-xl font-semibold text-gray-100">
               {device.type}
             </span>
-            <FaCamera className="text-gray-100 ml-2 text-2xl" />
+            <FaCameraRetro className="text-gray-100 ml-3 text-2xl" />
           </div>
         }
         rightcard={
           <div>
-            <h2 className="text-xl font-semibold">Device :</h2>
+            <h2 className="text-xl font-semibold">Guid Device:</h2>
             <p className="mt-2 text-sm">{deviceDescription}</p>
           </div>
         }
@@ -191,17 +182,15 @@ const Banner = () => {
           </div>
         }
         rightcard3={
-          <div className="h-[450px]">
+          <div className="h-96 w-full">
             <MapContainer
               center={[device.latitude, device.longitude]}
               zoom={11}
-              style={{ height: "100%", width: "100%" }}
+              style={{ height: "100%", width: "100%", borderRadius: '6px' }}
             >
               <TileLayer
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                attribution='Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               />
-              {/* {deviceData.map((device) => ( */}
               <Marker
                 key={device.guid}
                 position={[device.latitude, device.longitude]}

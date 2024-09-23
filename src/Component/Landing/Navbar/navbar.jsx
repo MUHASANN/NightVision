@@ -3,7 +3,7 @@ import Icon from '/diaphragm.png';
 
 const Navbar = () => {
     return (
-        <nav className="bg-white text-gray-600 w-full z-50 shadow-md">
+        <nav className="bg-white text-gray-600 w-full z-50 shadow-sm">
             <div className="px-4 w-full">
                 <div className="flex justify-between items-center py-4">
                     <div className="hidden md:flex font-semibold space-x-3 ml-[70px]">

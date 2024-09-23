@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Card from "./card";
-import notFoundImage from "/404.png";
-import { FaClockRotateLeft } from "react-icons/fa6";
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
-import { getDataHistory, getDataHistoryCamera } from "../../Api/service/service";
+import { getDataHistoryCamera } from "../../Api/service/service";
 
 const PlaceholderCard = () => (
-  <div className="bg-gray-300 animate-pulse p-4 rounded-lg shadow-lg h-[250px]">
+  <div className="bg-gray-300 animate-pulse p-6 rounded-lg shadow-lg h-[250px]">
     <div className="bg-gray-100 h-[150px] rounded-lg mb-4"></div>
     <div className="bg-gray-100 h-[20px] rounded-lg mb-2"></div>
     <div className="bg-gray-100 h-[20px] rounded-lg"></div>
@@ -43,14 +41,10 @@ const History = () => {
   if (loading) {
     return (
       <div className="p-6 bg-gray-100 min-h-screen">
-        <div className="bg-gray-700 text-white p-3 rounded-lg shadow-lg mb-6">
-          <div className="flex items-center mb-2 px-4">
-            <FaClockRotateLeft className="text-3xl mr-4" />
-            <h1 className="text-3xl font-bold flex-grow">History Gambar</h1>
-          </div>
-          <p className="text-lg ml-4 mb-1">riwayat dan garis waktu aktivitas perangkat</p>
-        </div>
-
+        <Card 
+          isHeader={true} 
+          title={guid_device} 
+        />
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
           {Array.from({ length: 4 }).map((_, index) => (
             <PlaceholderCard key={index} />
@@ -85,15 +79,12 @@ const History = () => {
   );
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
-      <div className="bg-gray-700 text-white p-3 rounded-lg shadow-lg mb-6">
-        <div className="flex items-center mb-2 px-4">
-          <FaClockRotateLeft className="text-3xl mr-4" />
-          <h1 className="text-3xl font-bold flex-grow">History Gambar</h1>
-        </div>
-        <p className="text-lg ml-4 mb-1">riwayat dan garis waktu aktivitas perangkat</p>
-      </div>
+    <div className="p-5 bg-gray-100 min-h-screen">
 
+      <Card 
+        isHeader={true} 
+        title={guid_device} 
+      />
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
         {currentItems.map((card) => (
           <Card
@@ -109,7 +100,7 @@ const History = () => {
         <button
           onClick={handlePreviousPage}
           disabled={currentPage === 0}
-          className="bg-gray-300 text-gray-800 px-4 py-2 rounded-lg disabled:opacity-50 flex items-center"
+          className="bg-white shadow-sm text-gray-700 px-4 py-2 rounded-lg disabled:opacity-50 flex items-center transition-transform transform hover:scale-105"
         >
           <FaAngleLeft className="text-lg" />
           <span className="ml-2">Previous</span>
@@ -120,7 +111,7 @@ const History = () => {
         <button
           onClick={handleNextPage}
           disabled={currentPage === totalPages - 1}
-          className="bg-gray-300 text-gray-800 px-4 py-2 rounded-lg disabled:opacity-50 flex items-center"
+          className="bg-white shadow-sm text-gray-700 px-4 py-2 rounded-lg disabled:opacity-50 flex items-center transition-transform transform hover:scale-105"
         >
           <span className="mr-2">Next</span>
           <FaAngleRight className="text-lg" />

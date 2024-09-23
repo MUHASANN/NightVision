@@ -8,9 +8,9 @@ const Banfi = () => {
   return (
     <div className="w-full h-[41em] bg-gray-200 relative">
       <Navbar />
-      <div className="flex flex-col">
-        <header className="flex justify-between items-center p-3 mt-1">
-          <nav className="flex items-center justify-start font-semibold bg-white w-full max-w-auto h-[60px] shadow-md rounded-lg relative">
+      <div className="flex flex-col p-2">
+        <header className="flex justify-between items-center p-3">
+          <nav className="flex items-center justify-start font-semibold bg-white w-full max-w-auto h-[70px] shadow-md rounded-lg relative">
             <Link to="/Peta-Lokasi">
               <button className="bg-white text-gray-900 py-2 px-4 rounded-lg mx-2 hover:bg-gray-200 hover:text-gray-600 ml-4 transition-colors duration-300 ease-in-out flex items-center">
                 PETA <FaMapMarkedAlt className="ml-2" />
@@ -23,7 +23,7 @@ const Banfi = () => {
             </Link>
           </nav>
         </header>
-        <main className="flex justify-center items-center p-3">
+        <main className="flex justify-start items-center p-3">
           <div className="flex items-center justify-center font-semibold bg-gray-900 w-full max-w-[55em] h-[450px] shadow-md rounded-lg">
             <div className="w-[50em] h-[24em]">
               <BarChart />

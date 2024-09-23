@@ -13,9 +13,9 @@ const apiHistory = axios.create({
   baseURL: apiUrlHistory,
 });
 
-export const getDataDeviceByCompany = async (type) => {
+export const getDataDeviceByCompany = async () => {
   try {
-    const response = await api.get(`devices/by-type-company?companyGuid=${company}&type=${type}`);
+    const response = await api.get(`/devices/type-device/${company}`);
     return response.data;
   } catch (error) {
     console.error("Error fetching device data:", error);
@@ -33,9 +33,9 @@ export const getDataDeviceByGuid = async (guid) => {
   }
 };
 
-export const getDataDevice = async () => {
+export const getDataDevice = async (type) => {
     try {
-      const response = await api.get('/devices/camera');
+      const response = await api.get(`/devices/by-type-company?companyGuid=${company}&type=${type}`);
       return response.data;
     } catch (error) {
       console.error("Error fetching device data:", error);

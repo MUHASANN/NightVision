@@ -11,7 +11,7 @@ const Card = ({ guid_device,type, title, description, buttonLabel, highlighted =
   };
 
   return (
-    <div className={`card p-4 bg-gray-600 border rounded shadow-md transition-transform transform hover:scale-105 duration-300 ease-in-out ${highlighted ? 'bg-yellow-100' : ''}`}>
+    <div className={`card p-8 bg-gray-600 border rounded shadow-md transition-transform transform hover:scale-105 duration-300 ease-in-out ${highlighted ? 'bg-yellow-100' : ''}`}>
       <div className="flex items-center mb-2">
         <FaWhmcs className="text-gray-100 mr-2 w-4 h-4" />
         <h3 className="text-xl font-semibold text-white">{title}</h3>
