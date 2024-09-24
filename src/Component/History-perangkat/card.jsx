@@ -37,7 +37,7 @@ const Card = ({ image, title, description, isHeader }) => {
               Pilih Tanggal
             </button>
           </div>
-          <div className="flex justify-left items-center ml-4 mt-2 space-x-2 ">
+          <div className="flex justify-left items-center space-x-2 ">
             <p className="text-lg text-gray-700">Riwayat dan garis waktu aktivitas perangkat |</p>
             <div className="flex space-x-1 mt-[1.5px]">
               <p className="text-md text-gray-700">Tanggal Gambar : <span className="text-gray-400">{startDate || "None"} - </span></p>

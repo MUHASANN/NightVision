@@ -6,7 +6,7 @@ import { MdOutlineSensors } from "react-icons/md";
 const Card = ({ type, guid_device, title, description, date, time, status, content, buttonLabel }) => {
   return (
     <>
-      <div className="flex justify-center w-full p-2 ml-1 bg-white border-blue-500 rounded-xl mb-4 shadow-sm">
+      <div className="flex justify-center w-full p-2 ml-1 bg-white border-blue-500 rounded-xl mb-4 shadow-smbh">
        <h2 className="font-semibold text-lg text-gray-800 mt-[2px]">
         Detail Sensor
        </h2>

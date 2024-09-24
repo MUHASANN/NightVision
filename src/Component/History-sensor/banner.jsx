@@ -67,8 +67,8 @@ const Banner = () => {
                 <GiMovementSensor className="text-gray-700 text-5xl mr-2" />
                 <h1 className="text-3xl font-bold text-gray-900">Histori Sensor</h1>
               </div>
-              <p className="text-gray-600 text-md ml-4">
-                Data & Status catatan lengkap dan real-time mengenai aktivitas sensor.
+              <p className="text-gray-600 text-md ml-2">
+                Data & Status catatan lengkap dan real-time mengenai aktivitas sensor
               </p>
             </div>
             <div className="absolute top-3 right-3 text-sm text-gray-600 bg-gray-100 px-2 py-2 rounded-lg">
