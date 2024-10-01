@@ -6,10 +6,10 @@ import "leaflet/dist/leaflet.css";
 import { FaCameraRetro } from "react-icons/fa";
 import notFoundImage from "../../../public/404.png";
 import {
-  getDataHistory,
+  // getDataHistory,
   getDataDevice,
   getDataDeviceByGuid,
-  getDataHistoryCamera,
+  getDataHistoryType,
 } from "../../Api/service/service";
 
 const Banner = () => {
@@ -34,7 +34,7 @@ const Banner = () => {
         let historyResponse;
         console.log(device);
         if (device.data.type == "Camera") {
-          historyResponse = await getDataHistoryCamera(1, 1, guid_device);
+          historyResponse = await getDataHistoryType(1, 1, guid_device);
           console.log(historyResponse.data.data);
         }
 
@@ -91,7 +91,7 @@ const Banner = () => {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center p-10">
+      <div className="flex flex-col items-center mt-6">
         <div className="animate-pulse w-full max-w-md">
           <div className="h-48 bg-gray-300 rounded-lg mb-4"></div>
           <div className="h-4 bg-gray-300 rounded mb-2"></div>
@@ -121,44 +121,49 @@ const Banner = () => {
     const deviceDate = history.datetime;
 
     return (
+    <div className='p-1 bg-gray-100 h-[42.5em]'>
       <Carddetail
         key={index}
         guid_device={guidDevice}
         type={device.type}
         leftcard={
-          <div className="p-4 w-72 bg-white rounded-lg shadow-sm">
-            <h3 className="text-md font-semibold mb-2">Data Terakhir</h3>
-            <img
-              src={`https://smartparking.pptik.id/data/data/${leftCardImage}`}
-              alt="Realtime Image"
-              className="w-full h-[200px] object-cover rounded-lg mb-2"
-              onError={(e) => {
-                e.target.onerror = null;
-                e.target.src =
-                  "https://monitoring.pptik.id/data/RFIDCAM/no_image.jpg";
-              }}
-            />
-            <p className="text-sm text-gray-600">{deviceDate}</p>
+          <div className="flex justify-center">
+            <div className="p-4 w-72 bg-white rounded-lg shadow-sm hover:shadow-md transition-colors duration-300">
+              <h3 className="text-md font-semibold mb-2">Data Terakhir</h3>
+              <img
+                src={`https://smartparking.pptik.id/data/data/${leftCardImage}`}
+                alt="Realtime Image"
+                className="w-full h-[200px] object-cover rounded-lg mb-2"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src =
+                    "https://monitoring.pptik.id/data/RFIDCAM/no_image.jpg";
+                }}
+              />
+              <p className="text-sm text-gray-600">Waktu: {deviceDate}</p>
+            </div>
           </div>
         }
         leftcard2={
-          <div className="p-4 w-72 bg-white rounded-lg shadow-sm">
-            <h3 className="text-md font-semibold mb-2">Data Realtime</h3>
-            <img
-              src={`https://smartparking.pptik.id/data/data/${
-                realTimeData.value || notFoundImage
-              }`}
-              alt="Last Data Image"
-              className="w-full h-[200px] object-cover rounded-lg mb-2"
-              onError={(e) => {
-                e.target.onerror = null;
-                e.target.src =
-                  "https://monitoring.pptik.id/data/RFIDCAM/no_image.jpg";
-              }}
-            />
-            <p className="text-sm text-gray-600">
-              Waktu: {realTimeData.datetime || "No data available"}
-            </p>
+          <div className="flex justify-center">
+            <div className="p-4 w-72 bg-white rounded-lg shadow-sm hover:shadow-md transition-colors duration-300">
+              <h3 className="text-md font-semibold mb-2">Data Realtime</h3>
+              <img
+                src={`https://smartparking.pptik.id/data/data/${
+                  realTimeData.value || notFoundImage
+                }`}
+                alt="Last Data Image"
+                className="w-full h-[200px] object-cover rounded-lg mb-2"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src =
+                    "https://monitoring.pptik.id/data/RFIDCAM/no_image.jpg";
+                }}
+              />
+              <p className="text-sm text-gray-600">
+                Waktu: {realTimeData.datetime || "No data available"}
+              </p>
+            </div>
           </div>
         }
         centercard={
@@ -166,23 +171,23 @@ const Banner = () => {
             <span className="text-xl font-semibold text-gray-100">
               {device.type}
             </span>
-            <FaCameraRetro className="text-gray-100 ml-3 text-2xl" />
+            <FaCameraRetro className="text-gray-100 ml-2 text-2xl" />
           </div>
         }
         rightcard={
           <div>
-            <h2 className="text-xl font-semibold">Guid Device:</h2>
+            <h2 className="text-lg font-semibold">{device.name}</h2>
             <p className="mt-2 text-sm">{deviceDescription}</p>
           </div>
         }
         rightcard2={
           <div>
-            <h2 className="text-xl font-semibold">Tanggal Registrasi:</h2>
+            <h2 className="text-xl font-semibold">Tanggal Registrasi</h2>
             <p className="text-sm mt-2">{formattedDates}</p>
           </div>
         }
         rightcard3={
-          <div className="h-96 w-full">
+          <div className="h-[23.5em] w-full">
             <MapContainer
               center={[device.latitude, device.longitude]}
               zoom={11}
@@ -190,16 +195,15 @@ const Banner = () => {
             >
               <TileLayer
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              />
+                />
               <Marker
                 key={device.guid}
                 position={[device.latitude, device.longitude]}
               >
                 <Popup>
                   <div>
-                    <strong>{device.name}</strong>
-                    <p>Latitude: {device.latitude}</p>
-                    <p>Longitude: {device.longitude}</p>
+                    <strong className="flex justify-center">{device.name}</strong>
+                    <p className="flex justify-center">Latitude: {device.latitude} | Longitude: {device.longitude}</p>
                   </div>
                 </Popup>
               </Marker>
@@ -207,7 +211,8 @@ const Banner = () => {
             </MapContainer>
           </div>
         }
-      />
+        />
+    </div>
     );
   });
 

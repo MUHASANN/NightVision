@@ -43,22 +43,32 @@ export const getDataDevice = async (type) => {
     }
 };
 
-export const getDataHistory = async (page, limit, guid) => {
-    try {
-      const response = await api.get(`devices/data/${page}/${limit}/${guid}`);
-      return response.data;
-    } catch (error) {
-      console.error("Error fetching history data:", error);
-      throw error;
-    }
-};
+// export const getDataHistory = async (page, limit, guid) => {
+//     try {
+//       const response = await api.get(`devices/data/${page}/${limit}/${guid}`);
+//       return response.data;
+//     } catch (error) {  
+//       console.error("Error fetching history data:", error);
+//       throw error;
+//     }
+// };
 
-export const getDataHistoryCamera = async (page, limit, guid) => {
+export const getDataHistoryType = async (page, limit, guid) => {
   try {
     const response = await apiHistory.get(`/data/log?page=${page}&limit=${limit}&guid_device=${guid}`);
     return response.data;
   } catch (error) {
     console.error("Error fetching history data:", error);
+    throw error;
+  }
+};
+
+export const getDataHistorySensor = async (page, limit, guid) => {
+  try {
+    const response = await apiHistory.get(`/data/log?page=${page}&limit=${limit}&guid_device=${guid}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching history data:", error)
     throw error;
   }
 };

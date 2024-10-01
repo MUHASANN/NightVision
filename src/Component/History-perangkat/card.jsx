@@ -31,7 +31,7 @@ const Card = ({ image, title, description, isHeader }) => {
             </div>
             <button
               onClick={handleOpenModal}
-              className="bg-purple-100 px-2 py-1 rounded-lg text-purple-500 text-md border-blue-100 border-[1px] hover:bg-blue-100 hover:underline focus:outline-none"
+              className="bg-purple-100 px-4 py-1 rounded-lg text-purple-500 text-md border-blue-100 border-[1px] hover:bg-purple-200 hover:underline focus:outline-none"
               aria-label="Pilih Tanggal"
             >
               Pilih Tanggal
@@ -46,7 +46,7 @@ const Card = ({ image, title, description, isHeader }) => {
           </div>
         </div>
       ) : (
-        <div className="bg-white p-4 rounded-lg shadow-sm transition-transform transform hover:scale-105">
+        <div className="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-colors duration-300 transition-transform transform hover:scale-105">
           <img
             src={`https://smartparking.pptik.id/data/data/${image}`}
             alt={title}

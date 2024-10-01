@@ -14,6 +14,7 @@ const Navbar = () => {
                         <a href="/informasi" className="hover:bg-gray-200 px-4 py-2 rounded transition-colors duration-300 ease-in-out"
                         >INFORMASI</a>
                     </div>
+                        
                     <div className='h-[30px] w-[30px] mr-8'>
                         <img src={Icon} alt="camera" />
                     </div>
