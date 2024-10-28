@@ -22,7 +22,7 @@ const Card = ({ guid_device, type, title, description, highlighted = false, onCl
     <Link 
       to={`/detail-perangkat/${type}/${guid_device}`} 
       onClick={onClick} 
-      className={`card relative p-8 border rounded-lg shadow-sm transition-transform transform hover:scale-105 hover:shadow-md duration-300 ease-in-out 
+      className={`card relative p-8 border rounded-lg shadow-md transition-transform transform hover:scale-105 hover:shadow-lg duration-300 ease-in-out 
       ${highlighted ? 'bg-yellow-100 border-yellow-400' : 'bg-white border-gray-200'}`}
     >
       <div className="mb-2">

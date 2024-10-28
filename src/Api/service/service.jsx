@@ -53,9 +53,9 @@ export const getDataDevice = async (type) => {
 //     }
 // };
 
-export const getDataHistoryType = async (page, limit, guid) => {
+export const getDataHistoryType = async (page, limit, guid, startdate, enddate) => {
   try {
-    const response = await apiHistory.get(`/data/log?page=${page}&limit=${limit}&guid_device=${guid}`);
+    const response = await apiHistory.get(`/data/log?page=${page}&limit=${limit}&guid_device=${guid}&startDate=${startdate}&endDate=${enddate}`);
     return response.data;
   } catch (error) {
     console.error("Error fetching history data:", error);
@@ -63,9 +63,9 @@ export const getDataHistoryType = async (page, limit, guid) => {
   }
 };
 
-export const getDataHistorySensor = async (page, limit, guid) => {
+export const getDataStatistik = async (startdate, enddate) => {
   try {
-    const response = await apiHistory.get(`/data/log?page=${page}&limit=${limit}&guid_device=${guid}`);
+    const response = await apiHistory.get(`/reports/statistics?companyGuid=${company}startDate=${startdate}&endDate=${enddate}`);
     return response.data;
   } catch (error) {
     console.error("Error fetching history data:", error)

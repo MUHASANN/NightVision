@@ -76,10 +76,10 @@ const Banner = () => {
   });
 
   return (
-    <div className="p-6 bg-gray-100 h-[38em]">
+    <div className="p-6 mt-16">
       <div className="container mx-auto">
 
-        <div className="bg-white rounded-lg shadow-sm p-6 mb-6 flex flex-col md:flex-row justify-between items-center">
+        <div className="bg-white rounded-lg shadow-sm border-gray-200 p-6 mb-6 flex flex-col md:flex-row justify-between items-center">
           <div className="relative mt-4 md:mt-0 md:w-2/5">
             <input
               type="text"
@@ -130,7 +130,7 @@ const Banner = () => {
               ))}
         </div>
 
-        {/* Pagination Controls */}
+        {/* Pagination */}
         <div className="flex justify-between items-center mt-8">
           <div className="flex items-center space-x-2">
             <button

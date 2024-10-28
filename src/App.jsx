@@ -1,55 +1,46 @@
-// INI ADALAH ROUTER
-
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Navbar from "./Component/Landing/Navbar/navbar";
-import Banner from "./Component/Landing/Banner/banner";
+import Navbar from "./Component/Navbar/navbar";
+import Banner from "./Component/Dashboard/Banner/banner";
 
-import Perangkaty from "./Page/perangkat";
+import DInformasi from "./Page/Dashboard/Dashboard-Informasi";
+import DPerangkat from "./Page/Dashboard/Dashboard-Perangkat";
 
-import Detail from "./Page/detail";
+import DetailCamera from "./Page/Detail/Detail-camera";
 import DetailSensor from "./Page/Detail/Detail-sensor";
 import DetailAktuator from "./Page/Detail/Detail-Aktuatkor";
+import PetaInfo from "./Page/Detail/Peta-Informasi";
 
-import Banfi from "./Page/Banfi";
-import Peta from "./Page/Peta";
-import Historipage from "./Page/Informasi-histori";
-
-import Historypage from "./Page/history-1";
+import HistoryCamera from "./Page/History/History-Camera";
+import HistoryInfo from "./Page/History/History-Informasi";
 import HistoryAktuator from "./Page/History/History-Aktuator";
 import HistorySensor from "./Page/History/History-Sensor";
 
-
 function App() {
   return (
-    <div className="flex flex-row justify-center w-full bg-gray-200">
-       <div className="w-full h-[640px]">
-        <Router>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/perangkat" element={<Perangkaty />}/>
-            <Route path="/Informasi" element={<Banfi />}/>
-            <Route path="/Peta-Lokasi" element={<Peta />}/>
-
-            <Route path="/Histori-infromasi" element={<Historipage />}/>
-
-            <Route path="/detail-perangkat/Camera/:guid_device" element={<Detail />} />
-            <Route path="/detail-perangkat/Sensor/:guid_device" element={<DetailSensor />} />
-            <Route path="/detail-perangkat/Aktuator/:guid_device" element={<DetailAktuator />}/>
-
-            <Route path="/history-perangkat/Camera/:guid_device" element={<Historypage />} />
-            <Route path="/history-perangkat/Aktuator/:guid_device" element={<HistoryAktuator />} />
-            <Route path="/history-perangkat/Sensor/:guid_device" element={<HistorySensor />} />
-          </Routes>
-        </Router>
-      </div>
+    <div>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/perangkat" element={<DPerangkat />} />
+          <Route path="/Informasi" element={<DInformasi />} />
+          <Route path="/Peta-Lokasi" element={<PetaInfo />} />
+          <Route path="/history" element={<HistoryInfo />} />
+          <Route path="/detail-perangkat/Camera/:guid_device" element={<DetailCamera />} />
+          <Route path="/detail-perangkat/Sensor/:guid_device" element={<DetailSensor />} />
+          <Route path="/detail-perangkat/Aktuator/:guid_device" element={<DetailAktuator />} />
+          <Route path="/history-perangkat/Camera/:guid_device" element={<HistoryCamera />} />
+          <Route path="/history-perangkat/Aktuator/:guid_device" element={<HistoryAktuator />} />
+          <Route path="/history-perangkat/Sensor/:guid_device" element={<HistorySensor />} />
+        </Routes>
+      </Router>
     </div>
   );
 }
 
 function Home() {
-  return(
-    <div>
+  return (
+    <div className="bg-slate-100 h-[37em]">
       <Navbar />
       <Banner />
     </div>

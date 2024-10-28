@@ -1,5 +1,5 @@
 import React from 'react';
-import Gajah from '../../asset/CCTV/Gajah_Giring.jpeg';
+import Gajah from '../../../asset/CCTV/Gajah_Giring.jpeg';
 
 const cardData = [
     {
@@ -34,7 +34,7 @@ const cardData = [
     },
 ];
 
-const History = () => {
+const Banner = () => {
     return (
         <div className="w-full h-[40em] bg-gray p-4">
             <div className='w-full bg-white py-3 mb-6 flex justify-between items-center rounded-lg'>
@@ -66,4 +66,4 @@ const History = () => {
     );
 };
 
-export default History;
+export default Banner;

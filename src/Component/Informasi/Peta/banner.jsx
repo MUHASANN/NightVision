@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { getDataDevice } from "../../Api/service/service";
+import { getDataDevice } from "../../../Api/service/service";
 
 import { RxMagnifyingGlass } from "react-icons/rx";
-import Gajah from "../../asset/CCTV/Gajah_Giring.jpeg";
+import Gajah from "../../../asset/CCTV/Gajah_Giring.jpeg";
 
 const Peta = () => {
     const [locations, setLocations] = useState([]);
