@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Link } from 'react-router-dom';
 import { MapPinArea, Broadcast, CalendarDots, ClockCounterClockwise } from "@phosphor-icons/react";
 
-const Card = ({ type, guid_device, title, description, date, content, contenttable, buttonLabel }) => {
+const Card = ({ type, guid_device, title, description, date, content, contenttable, buttonLabel, status }) => {
   return (
     <div className="flex flex-wrap lg:flex-nowrap p-1 lg:space-y-0 lg:space-x-6">
       {/* Device Details Card */}
@@ -13,7 +13,12 @@ const Card = ({ type, guid_device, title, description, date, content, contenttab
             <div className="flex items-center">
               <Broadcast size={50} color="#094462" weight="duotone" className="mr-4" />
               <div>
-                <h1 className="text-2xl font-semibold text-gray-900 mb-2">{title}</h1>
+                <h1 className="text-2xl font-semibold text-gray-900 mb-2 flex items-center">
+                  {title}
+                  <span className={`ml-2 text-xs font-medium px-3 py-1 rounded-full ${status === "Aktif" ? "bg-blue-200 text-blue-500" : "bg-red-200 text-red-500"}`}>
+                    {status}
+                  </span>
+                </h1>
                 <p className="bg-gray-100 p-2 rounded-lg text-gray-500 text-xs hover:shadow-sm ">
                   Guid Perangkat | {description}
                 </p>
@@ -26,15 +31,14 @@ const Card = ({ type, guid_device, title, description, date, content, contenttab
               {buttonLabel}
             </Link>
           </div>
-
         </div>
         <div className="mt-4 p-4 bg-white rounded-xl shadow-md hover:shadow-lg transition-all">
           <h1 className="text-xl font-semibold text-gray-800 flex items-center mb-3">
-             PETA LOKASI
+            PETA LOKASI
             <MapPinArea size={30} color="#004D1F" weight="duotone" className="ml-2" />
           </h1>
-              <hr />
-            <div className="mt-4 hover:shadow-sm">{content}</div>
+          <hr />
+          <div className="mt-4 hover:shadow-sm">{content}</div>
         </div>
       </div>
 
@@ -53,7 +57,7 @@ const Card = ({ type, guid_device, title, description, date, content, contenttab
         <div className="mt-4 p-6 bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105">
           <div className="flex item-center">
             <ClockCounterClockwise size={24} color="#094462" weight="duotone" className="mr-1" />
-              <h1 className="font-semibold text-gray-800 mb-2">
+            <h1 className="font-semibold text-gray-800 mb-2">
               Data Terakhir:
             </h1>
           </div>
@@ -73,6 +77,7 @@ Card.propTypes = {
   content: PropTypes.node.isRequired,
   contenttable: PropTypes.node.isRequired,
   buttonLabel: PropTypes.string,
+  status: PropTypes.string.isRequired,
 };
 
 export default Card;

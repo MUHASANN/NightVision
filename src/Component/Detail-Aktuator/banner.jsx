@@ -18,19 +18,18 @@ const Banner = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const deviceResponse = await getDataDeviceByGuid(guid_device);
-        const deviceData = deviceResponse.data;
-        setDeviceData(deviceData);
+        const { data: deviceResponse } = await getDataDeviceByGuid(guid_device);
+        setDeviceData(deviceResponse);
 
-        if (deviceData.type === "Aktuator") {
-          let tabelResponse = await getDataHistoryType(1, 2, guid_device, "2024-09-01", "2024-09-30");
+        if (deviceResponse.type === "Aktuator") {
+          const tabelResponse = await getDataHistoryType(1, 2, guid_device, "2024-09-01", "2024-09-30");
           setTabel(Array.isArray(tabelResponse.data.data) ? tabelResponse.data.data : []);
 
-          let historyResponse = await getDataHistoryType(1, 1, guid_device, "2024-09-01", "2024-09-30");
+          const historyResponse = await getDataHistoryType(1, 1, guid_device, "2024-09-01", "2024-09-30");
           setHistoryData(Array.isArray(historyResponse.data.data) ? historyResponse.data.data : []);
         }
 
-        const formattedDate = new Date(deviceData.updatedAt).toLocaleDateString("id-ID", {
+        const formattedDate = new Date(deviceResponse.updatedAt).toLocaleString("id-ID", {
           year: "numeric",
           month: "long",
           day: "numeric",
@@ -41,7 +40,7 @@ const Banner = () => {
 
       } catch (error) {
         console.error("Error fetching data:", error);
-        setError("Failed to load data. Please try again later.");
+        setError("Gagal memuat data. Silakan coba lagi nanti.");
       } finally {
         setLoading(false);
       }
@@ -50,40 +49,10 @@ const Banner = () => {
     fetchData();
   }, [guid_device]);
 
-  const HistoryTable = ({ tabel }) => (
-    <table className="min-w-full h-68 text-left rounded-lg overflow-hidden">
-      <thead>
-        <tr className="bg-gray-100 border-b">
-          <th className="py-3 px-4 text-xs font-semibold text-gray-700">Tanggal</th>
-          <th className="py-3 px-4 text-xs text-right font-semibold text-gray-700">Waktu</th>
-        </tr>
-      </thead>
-      <tbody className="divide-y divide-gray-200">
-        {tabel.map((tabel, index) => {
-          const formattedTime = new Date(tabel.datetime).toLocaleTimeString("sv-SE", {
-            hour: "2-digit",
-            minute: "2-digit",
-          });
-          const formattedDate = new Date(tabel.datetime).toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "numeric",
-            day: "numeric",
-          });
-  
-          return (
-            <tr key={index} className="hover:bg-gray-100 transition-colors duration-150">
-              <td className="py-3 px-4 text-xs text-gray-700">{formattedDate}</td>
-              <td className="py-3 px-4 text-xs text-right text-gray-700">{formattedTime}</td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
-  );  
-
   const renderCards = historyData.map((history, index) => {
-    const guidDevice = history.guid_device;
+ const guidDevice = history.guid_device;
     const descript = history.guid_device;
+  const status = history.value == 1 ? "Aktif" : "Non-Aktif";
 
     return (
       <div key={index} className="p-6 mt-16">
@@ -94,6 +63,7 @@ const Banner = () => {
           description={descript}
           date={formattedDate}
           buttonLabel="Lihat histori..."
+          status={status}
           contenttable={<HistoryTable tabel={tabel} />}
           content={
             <div className="h-[18em] w-full">
@@ -122,7 +92,12 @@ const Banner = () => {
   return (
     <div className="relative">
       {loading ? (
-        <div>Loading...</div> // You can replace this with a simple loading message or another component if desired.
+        <div className="flex justify-center">
+          <svg className="animate-spin h-5 w-5 text-gray-700" viewBox="0 0 24 24">
+            <circle className="opacity-25" cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="4"></circle>
+            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12z"></path>
+          </svg>
+        </div>
       ) : error ? (
         <div>{error}</div>
       ) : (
@@ -131,5 +106,36 @@ const Banner = () => {
     </div>
   );
 };
+
+const HistoryTable = ({ tabel }) => (
+  <table className="min-w-full text-left rounded-lg overflow-hidden">
+    <thead>
+      <tr className="bg-gray-100 border-b">
+        <th className="py-3 px-4 text-xs font-semibold text-gray-700">Tanggal</th>
+        <th className="py-3 px-4 text-xs text-right font-semibold text-gray-700">Waktu</th>
+      </tr>
+    </thead>
+    <tbody className="divide-y divide-gray-200">
+      {tabel.map((item, index) => {
+        const formattedTime = new Date(item.datetime).toLocaleTimeString("sv-SE", {
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+        const formattedDate = new Date(item.datetime).toLocaleDateString("id-ID", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        });
+
+        return (
+          <tr key={index} className="hover:bg-gray-100 transition-colors duration-150">
+            <td className="py-3 px-4 text-xs text-gray-700">{formattedDate}</td>
+            <td className="py-3 px-4 text-xs text-right text-gray-700">{formattedTime}</td>
+          </tr>
+        );
+      })}
+    </tbody>
+  </table>
+);
 
 export default Banner;

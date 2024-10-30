@@ -12,6 +12,12 @@ const Modal = ({ isOpen, onClose, onDateSelect }) => {
     onDateSelect(startDate, endDate);
   };
 
+  const handleClear = () => {
+    setStartDate("");
+    setEndDate("");
+    onDateSelect("", ""); // Notify parent that dates are cleared
+  };
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
       <div className="bg-white p-10 rounded-lg shadow-lg max-w-md w-full relative">
@@ -49,6 +55,13 @@ const Modal = ({ isOpen, onClose, onDateSelect }) => {
             />
           </div>
           <div className="flex justify-end items-center mt-8">
+            <button
+              type="button"
+              onClick={handleClear}
+              className="mr-2 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
+            >
+              Hapus
+            </button>
             <button
               type="submit"
               className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600"

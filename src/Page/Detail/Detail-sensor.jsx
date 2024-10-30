@@ -4,7 +4,7 @@ import Banner from "../../Component/Detail-Sensor/banner";
 
 const DetailSensor = () => {
     return (
-        <div className="bg-slate-100 h-[39em]">
+        <div className="bg-slate-100 h-[35.5em]">
           <Navbar />
           <Banner />
         </div>
