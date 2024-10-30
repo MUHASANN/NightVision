@@ -61,7 +61,7 @@ const Banner = () => {
 
   const fetchHistoryData = async (start, end) => {
     try {
-      const tableResponse = await getDataHistoryType(1, 1, guid_device, start, end);
+      const tableResponse = await getDataHistoryType(1, 10, guid_device, start, end);
       setTableData(Array.isArray(tableResponse.data.data) ? tableResponse.data.data : []);
       
       const historyResponse = await getDataHistoryType(1, 1, guid_device, start, end);
@@ -96,75 +96,49 @@ const Banner = () => {
   };
 
   const renderCards = historyData.map((item, index) => (
-    <div key={index} className="mb-4 transition-all duration-300 ease-in-out">
+    <div key={index} className="mb-6 transition-all duration-300 ease-in-out">
       <Card
         Content1={
-          <div className="p-3 px-4 bg-white rounded-lg shadow-md border border-gray-200 relative transition-all duration-300 ease-in-out">
-            <div className="flex-col">
-              <div className="flex items-center justify-center">
-                <h1 className="text-3xl font-bold text-gray-900 mb-1">{deviceData.name}</h1>
-              </div>
-              <p className="flex justify-center font-semibold text-gray-600 text-md ml-2">
-                Catatan histori lengkap. tanggal - waktu - status sensor
+          <div className="p-4 bg-white rounded-lg shadow-md border border-gray-200 relative transition-all duration-300 ease-in-out">
+            <div className="text-center mb-2">
+              <h1 className="text-2xl font-bold text-gray-900">{deviceData.name}</h1>
+              <p className="text-gray-600 text-semibold text-sm">
+                Catatan histori lengkap mengenai aktivitas Aktuator
               </p>
             </div>
-            {/* <div className="absolute top-3 right-3 text-sm text-gray-600 bg-gray-100 px-2 py-2 rounded-lg">
-              Today ( {new Date().toLocaleDateString('id-ID', {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric',
-              })} )
-            </div> */}
           </div>
         }
         Content2={
-          <div>
-            <div className="flex items-center justify-between mb-8 transition-all duration-300 ease-in-out">
-              <div className='bg-gray-100 p-3 w-72 rounded-xl flex item-center font-semibold text-xl text-gray-800 mt-1'>
-                <ClockCounterClockwise size={27} color="#094462" weight="duotone" className="mr-0.5 mt-0.5 transition-all duration-300 ease-in-out"/>
-                Tabel histori
-              </div>
-              <div>
-                <div className="flex">
-                    <Calendar size={24} weight="duotone" className="transition-all duration-300 ease-in-out"/>
-                    <p className="mb-1 ml-1">Pilih tanggal:</p>
-                  </div>
-                <button
-                  onClick={handleOpenModal}
-                  className="px-4 py-1 bg-gray-200 text-sm text-gray-500 border-blue-100 border-[1px] rounded-xl hover:bg-gray-300 transition duration-300 ease-in-out"
-                > 
-                  {startDate && endDate ? (
-                    `${new Date(startDate).toLocaleDateString('id-ID', {
-                      day: '2-digit',
-                      month: '2-digit',
-                      year: 'numeric',
-                    })} - ${new Date(endDate).toLocaleDateString('id-ID', {
-                      day: '2-digit',
-                      month: '2-digit',
-                      year: 'numeric',
-                    })}`
-                  ) : (
-                    'pilih...'
-                  )}
-                </button>
-              </div>
+          <div className="flex items-center justify-between mb-6 transition-all duration-300 ease-in-out">
+            <div className="flex items-center space-x-2">
+              <button
+                onClick={handleOpenModal}
+                className="flex items-center px-4 py-1 bg-white text-sm text-gray-500 border border-gray-300 rounded-lg shadow-sm hover:bg-gray-100"
+              >
+                <Calendar size={24} weight="duotone" className="mr-1" />
+                {startDate && endDate ? (
+                  `${new Date(startDate).toLocaleDateString('id-ID')} - ${new Date(endDate).toLocaleDateString('id-ID')}`
+                ) : (
+                  'pilih tanggal...'
+                )}
+              </button>
             </div>
-              <hr className='mb-5 transition-all duration-300 ease-in-out' />
+            <div className="bg-white p-2 rounded-lg shadow-md flex items-center text-gray-700 text-sm">
+              <ClockCounterClockwise size={18} color="#094462" weight="duotone" className="mr-2" />
+              <span>
+                Today ( {new Date().toLocaleDateString('id-ID')} )
+              </span>
+            </div>
           </div>
-        }
+        }        
         CardContent3={
           <Paper className="overflow-hidden w-full transition-all duration-300 ease-in-out">
-            <TableContainer className="max -h-[440px] transition-all duration-300 ease-in-out">
+            <TableContainer className="max-h-[480px]">
               <Table stickyHeader aria-label="sticky table">
                 <TableHead>
                   <TableRow>
                     {columns.map((column) => (
-                      <TableCell
-                        key={column.id}
-                        align="left"
-                        className="font-semibold transition-all duration-300 ease-in-out"
-                        style={{ minWidth: column.minWidth }}
-                      >
+                      <TableCell key={column.id} style={{ fontSize: '15px', fontWeight: 'bold' }}>
                         {column.label}
                       </TableCell>
                     ))}
@@ -172,22 +146,18 @@ const Banner = () => {
                 </TableHead>
                 <TableBody>
                   {tableData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((tableItem, index) => {
-                    const formattedDate = new Date(tableItem.datetime).toLocaleDateString("id-ID", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    });
+                    const formattedDate = new Date(tableItem.datetime).toLocaleDateString("id-ID");
                     const formattedTime = new Date(tableItem.datetime).toLocaleTimeString("sv-SE", {
                       hour: "2-digit",
                       minute: "2-digit",
                     });
-                    const status = tableItem.value === 1 ? "aktif" : "non-aktif";
-
+                    const status = Number(tableItem.value) === 1 ? "Aktif" : "Non-aktif";
+        
                     return (
                       <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                        <TableCell align="left" className="transition-all duration-300 ease-in-out">{formattedDate}</TableCell>
-                        <TableCell align="left" className="transition-all duration-300 ease-in-out">{formattedTime}</TableCell>
-                        <TableCell align="left" className="transition-all duration-300 ease-in-out">{status}</TableCell>
+                        <TableCell align="left" >{formattedDate}</TableCell>
+                        <TableCell align="left" >{formattedTime}</TableCell>
+                        <TableCell align="left" >{status}</TableCell>
                       </TableRow>
                     );
                   })}
@@ -210,11 +180,11 @@ const Banner = () => {
   ));
 
   return (
-    <div className="bg-gray-100 h-screen p-4 transition-all duration-300 ease-in-out">
+    <div className="p-3 transition-all duration-300 ease-in-out">
       {renderCards}
       <Modal
         isOpen={isModalOpen}
-        onClose={ handleCloseModal}
+        onClose={handleCloseModal}
         onDateSelect={(start, end) => handleDateSelection(start, end)}
       />
     </div>

@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 
 const Card = ({ Content1, Content2, CardContent3 }) => {
   return (
-    <div className='relative p-3'>
+    <div className='relative p-2'>
       <div>
         <div className="mb-4">
           {Content1}
         </div>
       </div>
 
-      <div className="relative bg-white p-8 rounded-lg shadow-md">
+      <div className="relative p-3">
         <div>
           {Content2}
           {CardContent3}

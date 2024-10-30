@@ -96,7 +96,7 @@ const Banner = () => {
           buttonLabel="Lihat histori..."
           contenttable={<HistoryTable tabel={tabel} />}
           content={
-            <div className="h-[22em] w-full">
+            <div className="h-[18em] w-full">
               <MapContainer center={[deviceData.latitude, deviceData.longitude]} zoom={11} style={{ height: '100%', width: '100%', borderRadius: '6px' }}>
                 <TileLayer
                   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

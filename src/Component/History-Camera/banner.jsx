@@ -62,30 +62,6 @@ const Banner = () => {
 
   const currentItems = historyData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
-  if (error) {
-    return (
-      <div className="flex justify-center items-center min-h-screen bg-gray-200">
-        <div className="text-xl font-semibold text-gray-700">{error}</div>
-      </div>
-    );
-  }
-
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="loader">Loading...</div>
-      </div>
-    );
-  }
-
-  if (historyData.length === 0 && !isLoading) {
-    return (
-      <div className="flex justify-center items-center min-h-screen bg-gray-200">
-        <div className="text-xl font-semibold text-gray-700">No data available</div>
-      </div>
-    );
-  }
-
   return (
     <div className="p-5">
       <div className="mb-4">
