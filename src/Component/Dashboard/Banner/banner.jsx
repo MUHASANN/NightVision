@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import Search from '../search';
 import { getDataDeviceByCompany, getDataDevice } from '../../../Api/service/service';
+import { MagnifyingGlass } from "@phosphor-icons/react";
 import { useNavigate } from 'react-router-dom';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
@@ -13,6 +13,8 @@ const Banner = () => {
     const [activeMarker, setActiveMarker] = useState(null);
     const [data, setData] = useState([]);
     const [datadevice, setDataDevice] = useState([]);
+    const [filteredDevices, setFilteredDevices] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const mapRef = useRef();
@@ -26,12 +28,12 @@ const Banner = () => {
                 const responseCompany = await getDataDeviceByCompany();
                 const devicesDataByCompany = responseCompany.data;
 
-                // Filter data based on activeTab
                 const filteredData = devicesDataByCompany.find(item => item.type === activeTab) || [];
                 setData(filteredData);
 
                 const responseDevice = await getDataDevice(activeTab);
                 setDataDevice(responseDevice.data);
+                setFilteredDevices(responseDevice.data);
             } catch (error) {
                 console.error("Failed to fetch data:", error);
                 setError('Failed to load data. Please try again later.');
@@ -43,40 +45,14 @@ const Banner = () => {
         fetchData();
     }, [activeTab]);
 
-    const handleSearch = useCallback((searchTerm) => {
-        const marker = data.find((m) =>
-            m.guid === searchTerm ||
-            m.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            (searchTerm.includes(",") && checkCoordinates(searchTerm, m))
+    useEffect(() => {
+        const lowerCaseQuery = searchQuery.toLowerCase();
+        setFilteredDevices(
+            datadevice.filter(device => device.name.toLowerCase().includes(lowerCaseQuery))
         );
-        if (marker && mapRef.current) {
-            mapRef.current.setView([marker.latitude, marker.longitude], 13);
-            setActiveMarker(marker);
-        } else {
-            console.log('Location not found');
-        }
-    }, [data]);
+    }, [searchQuery, datadevice]);
 
-    const checkCoordinates = (searchTerm, marker) => {
-        const [lat, lng] = searchTerm.split(',').map(coord => parseFloat(coord.trim()));
-        return Math.abs(marker.latitude - lat) < 0.0001 && Math.abs(marker.longitude - lng) < 0.0001;
-    };
-
-    const handleMarkerClick = (marker) => {
-        setActiveMarker(marker);
-    };
-
-    const handleMapClick = () => {
-        setActiveMarker(null); // Clear active marker when clicking on the map
-    };
-
-    const handleNavigation = (route) => {
-        if (activeMarker) {
-            navigate(route.replace(':guid_device', activeMarker.guid_device));
-        }
-    };
-
-    const getMarkerIcon = () => {
+    const getMarkerIcon = (isActive) => {
         const color = getMarkerColor();
         return L.divIcon({
             className: 'custom-icon',
@@ -103,51 +79,56 @@ const Banner = () => {
         }
     };
 
+    const handleMarkerClick = (marker) => {
+        setActiveMarker(marker);
+    };
+
+    const handleNavigation = (path) => {
+        navigate(path);
+    };
+
     const renderMap = () => (
         <MapContainer
             center={[-4.9863819, 105.7276469]}
             zoom={10}
             style={{ height: '100%', width: '100%', borderRadius: '8px' }}
             whenCreated={(mapInstance) => { mapRef.current = mapInstance; }}
-            onClick={handleMapClick}
         >
             <TileLayer
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            {datadevice.map((marker) => {
-                if (marker.latitude && marker.longitude) {
-                    return (
-                        <Marker
-                            key={marker.guid}
-                            position={[marker.latitude, marker.longitude]}
-                            icon={getMarkerIcon()}
-                            eventHandlers={{ click: () => handleMarkerClick(marker) }}
-                        >
-                            <Popup>
-                                <div className="w-52 text-center">
-                                    <strong className="block text-lg font-semibold text-gray-800 mb-2">
-                                        {marker.name}
-                                    </strong>
-                                    <div className="flex justify-center gap-2">
-                                        <button
-                                            onClick={() => handleNavigation(`/detail-perangkat/${marker.type}/${marker.deviceGuid}`)}
-                                            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:ring-2 focus:ring-blue-400 transition duration-300 text-sm"
-                                        >
-                                            Detail
-                                        </button>
-                                        <button
-                                            onClick={() => handleNavigation(`/history-perangkat/${marker.type}/${marker.deviceGuid}`)}
-                                            className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:ring-2 focus:ring-green-400 transition duration-300 text-sm"
-                                        >
-                                            Histori
-                                        </button>
-                                    </div>
+            {filteredDevices.map((marker) => {
+                const isActive = activeMarker && activeMarker.guid === marker.guid;
+                return (
+                    <Marker
+                        key={marker.guid}
+                        position={[marker.latitude, marker.longitude]}
+                        icon={getMarkerIcon(isActive)}
+                        eventHandlers={{ click: () => handleMarkerClick(marker) }}
+                    >
+                        <Popup>
+                            <div className="w-52 text-center">
+                                <strong className="block text-lg font-semibold text-gray-800 mb-2">
+                                    {marker.name}
+                                </strong>
+                                <div className="flex justify-center gap-2">
+                                    <button
+                                        onClick={() => handleNavigation(`/detail-perangkat/${marker.type}/${marker.deviceGuid}`)}
+                                        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:ring-2 focus:ring-blue-400 transition duration-300 text-sm"
+                                    >
+                                        Detail
+                                    </button>
+                                    <button
+                                        onClick={() => handleNavigation(`/history-perangkat/${marker.type}/${marker.deviceGuid}`)}
+                                        className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:ring-2 focus:ring-green-400 transition duration-300 text-sm"
+                                    >
+                                        Histori
+                                    </button>
                                 </div>
-                            </Popup>
-                        </Marker>
-                    );
-                }
-                return null;
+                            </div>
+                        </Popup>
+                    </Marker>
+                );
             })}
         </MapContainer>
     );
@@ -168,10 +149,17 @@ const Banner = () => {
                                 </li>
                             ))}
                         </ul>
-                        <div className="inline-block align-bottom m-2">
-                            <Search onSearch={handleSearch} />
+                            <div className="relative w-96 m-4">
+                                <input
+                                    type="text"
+                                    placeholder="Cari nama perangkat..."
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    className="border border-gray-300 rounded-md w-full px-4 py-2 text-sm pr-10"
+                                />
+                                <MagnifyingGlass size={21} className="absolute right-3 top-2/4 transform -translate-y-2/4 text-gray-400"/>
+                            </div>
                         </div>
-                    </div>
 
                     <hr />
 

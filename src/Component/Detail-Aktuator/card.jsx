@@ -1,67 +1,75 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from 'react-router-dom';
-import { MapPinArea, Broadcast, CalendarDots, ClockCounterClockwise } from "@phosphor-icons/react";
+import { Link } from "react-router-dom";
+import { MapPinArea, Broadcast, CalendarDots, ClockCounterClockwise, Info } from "@phosphor-icons/react";
 
-const Card = ({ type, guid_device, title, description, date, content, contenttable, buttonLabel, status }) => {
+const Card = ({ type, guid_device, title, description, date, content, contenttable, status }) => {
   return (
-    <div className="flex flex-wrap lg:flex-nowrap p-1 lg:space-y-0 lg:space-x-6">
-      {/* Device Details Card */}
-      <div className="w-full lg:w-2/3">
-        <div className="p-5 px-6 bg-white rounded-xl shadow-md transition-all">
-          <div className="flex justify-between items-center">
-            <div className="flex items-center">
-              <Broadcast size={50} color="#094462" weight="duotone" className="mr-4" />
-              <div>
-                <h1 className="text-2xl font-semibold text-gray-900 mb-2 flex items-center">
-                  {title}
-                  <span className={`ml-2 text-xs font-medium px-3 py-1 rounded-full ${status === "Aktif" ? "bg-blue-200 text-blue-500" : "bg-red-200 text-red-500"}`}>
-                    {status}
-                  </span>
-                </h1>
-                <p className="bg-gray-100 p-2 rounded-lg text-gray-500 text-xs hover:shadow-sm ">
-                  Guid Perangkat | {description}
-                </p>
+    <div className="bg-slate-100 w-full p-6">
+      <div className="flex flex-wrap lg:flex-nowrap gap-6">
+
+        {/* Left Section */}
+        <div className="w-full lg:w-2/3 space-y-4">
+          <div className="p-6 bg-white rounded-lg shadow-lg transition-all hover:shadow-md">
+            <div className="flex justify-between items-center">
+              <div className="flex items-center space-x-4">
+                <Broadcast size={48} color="#094462" weight="duotone" />
+                <div>
+                  <h1 className="text-xl font-semibold text-gray-800 mb-1">{title}</h1>
+                  <p className="text-gray-500 text-sm">Guid Perangkat | {description}</p>
+                </div>
               </div>
+              <Link
+                to={`/history-perangkat/${type}/${guid_device}`}
+                className="text-xs bg-blue-100 hover:bg-blue-400 text-blue-500 hover:text-white px-4 py-2 rounded-full transition-all transform hover:scale-105"
+                aria-label="View history"
+              >
+                Lihat histori...
+              </Link>
             </div>
-            <Link
-              to={`/history-perangkat/${type}/${guid_device}`}
-              className="text-xs bg-blue-100 hover:bg-blue-400 text-blue-500 px-4 hover:text-white py-2 rounded-full shadow-sm hover:shadow-md transition-all"
-            >
-              {buttonLabel}
-            </Link>
           </div>
-        </div>
-        <div className="mt-4 p-4 bg-white rounded-xl shadow-md hover:shadow-lg transition-all">
-          <h1 className="text-xl font-semibold text-gray-800 flex items-center mb-3">
-            PETA LOKASI
-            <MapPinArea size={30} color="#004D1F" weight="duotone" className="ml-2" />
-          </h1>
-          <hr />
-          <div className="mt-4 hover:shadow-sm">{content}</div>
-        </div>
-      </div>
 
-      {/* Registration and Last Data Section */}
-      <div className="w-full lg:w-1/3">
-        <div className="p-6 bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105">
-          <div className="flex items-center mb-2">
-            <CalendarDots size={24} color="#094462" weight="duotone" className="mr-1" />
-            <span className="font-semibold">Tanggal Registrasi:</span>
+          <div className="p-6 bg-white rounded-lg shadow-lg transition-all hover:shadow-md">
+            <h2 className="text-lg font-semibold text-gray-700 flex items-center">
+              PETA LOKASI
+              <MapPinArea size={28} color="#004D1F" weight="duotone" className="ml-2" />
+            </h2>
+            <hr className="my-2" />
+            <div className="mt-4">{content}</div>
           </div>
-          <p className="bg-gray-100 p-2 rounded-lg text-gray-500 text-sm hover:shadow-sm">
-            Registrasi Pada | {date}
-          </p>
         </div>
 
-        <div className="mt-4 p-6 bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105">
-          <div className="flex item-center">
-            <ClockCounterClockwise size={24} color="#094462" weight="duotone" className="mr-1" />
-            <h1 className="font-semibold text-gray-800 mb-2">
-              Data Terakhir:
-            </h1>
+        {/* Right Section */}
+        <div className="w-full lg:w-1/3 space-y-4">
+          <div className="p-6 bg-white rounded-lg shadow-lg transition-transform hover:scale-[1.02] hover:shadow-xl">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <Info size={22} color="#094462" weight="duotone" />
+                <span className="font-semibold text-gray-800">Status Perangkat</span>
+              </div>
+              <span
+                className={`text-xs px-3 py-1 rounded-full font-medium ${status === "Aktif" ? "bg-green-100 text-green-600" : "bg-red-100 text-red-600"}`}
+              >
+                {status}
+              </span>
+            </div>
           </div>
-          {contenttable}
+
+          <div className="p-6 bg-white rounded-lg shadow-lg transition-transform hover:scale-[1.02] hover:shadow-xl">
+            <div className="flex items-center space-x-2">
+              <CalendarDots size={22} color="#094462" weight="duotone" />
+              <span className="font-semibold text-gray-800">Tanggal Registrasi:</span>
+            </div>
+            <p className="mt-2 text-sm text-gray-600 bg-gray-100 p-2 rounded-lg">{date}</p>
+          </div>
+
+          <div className="p-6 bg-white rounded-lg shadow-lg transition-transform hover:scale-[1.02] hover:shadow-xl">
+            <div className="flex items-center space-x-2">
+              <ClockCounterClockwise size={22} color="#094462" weight="duotone" />
+              <h3 className="font-semibold text-gray-800">Data Terakhir:</h3>
+            </div>
+            <div className="mt-2">{contenttable}</div>
+          </div>
         </div>
       </div>
     </div>
@@ -76,7 +84,6 @@ Card.propTypes = {
   date: PropTypes.string.isRequired,
   content: PropTypes.node.isRequired,
   contenttable: PropTypes.node.isRequired,
-  buttonLabel: PropTypes.string,
   status: PropTypes.string.isRequired,
 };
 

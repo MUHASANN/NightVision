@@ -76,8 +76,8 @@ const Banner = () => {
   });
 
   return (
+    <div className="bg-slate-100 min-h-screen w-full p-0 m-0">
     <div className="p-6 mt-16">
-      <div>
 
         <div className="bg-white rounded-lg shadow-md border-gray-200 p-6 mb-6 flex flex-col md:flex-row justify-between items-center">
           <div className="relative mt-4 md:mt-0 md:w-2/5">

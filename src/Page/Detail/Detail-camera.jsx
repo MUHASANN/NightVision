@@ -4,7 +4,7 @@ import Banner from "../../Component/Detail-Camera/banner";
 
 const DetailCamera = () => {
     return (
-        <div className="bg-slate-100 h-[42em]">
+        <div className="bg-slate-100 h-[40em]">
             <Navbar /> 
             <Banner />
         </div>

@@ -8,6 +8,7 @@ import {
   getDataDeviceByGuid,
   getDataHistoryType,
 } from "../../Api/service/service";
+import "ldrs/tailspin";
 
 const Banner = () => {
   const { guid_device } = useParams();
@@ -99,7 +100,7 @@ const Banner = () => {
                   onError={(e) => {
                     e.target.onerror = null;
                     e.target.src =
-                      "https://monitoring.pptik.id/data/RFIDCAM/no_image.jpg";
+                      "https://cctv-tnwk.pptik.id/images/no-image.png";
                   }}
                 />
                 <p className="text-sm text-gray-600">Waktu: {deviceDate}</p>
@@ -119,7 +120,7 @@ const Banner = () => {
                   onError={(e) => {
                     e.target.onerror = null;
                     e.target.src =
-                      "https://monitoring.pptik.id/data/RFIDCAM/no_image.jpg";
+                      "https://cctv-tnwk.pptik.id/images/no-image.png";
                   }}
                 />
                 <p className="text-sm text-gray-600">
@@ -147,7 +148,7 @@ const Banner = () => {
             </div>
           }
           rightcard3={
-            <div className="h-[19em] w-full">
+            <div className="h-[19.5em] w-full">
               <MapContainer
                 center={[device.latitude, device.longitude]}
                 zoom={11}
@@ -177,7 +178,15 @@ const Banner = () => {
 
   return (
     <div className="relative">
-      {error ? <div>{error}</div> : <>{renderCards}</>}
+      {loading ? (
+        <div className="flex justify-center items-center h-screen">
+          <l-tailspin size="50" stroke="5" speed="0.9" color="gray"></l-tailspin>
+        </div>
+      ) : error ? (
+        <div>{error}</div>
+      ) : (
+        <>{renderCards}</>
+      )}
     </div>
   );
 };

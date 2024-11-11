@@ -3,7 +3,7 @@ import Banner from "../../Component/History-Aktuator/banner";
 
 const HistoryAktuator = () => {
     return (
-        <div className="bg-slate-100 h-[45em]">
+        <div className="bg-slate-100 h-[40em]">
             <Banner />
         </div>
     );

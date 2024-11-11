@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import 'leaflet/dist/leaflet.css';
 import Card from "./card";
+import "ldrs/tailspin";
 
 const Banner = () => {
   const { guid_device } = useParams();
@@ -50,9 +51,9 @@ const Banner = () => {
   }, [guid_device]);
 
   const renderCards = historyData.map((history, index) => {
- const guidDevice = history.guid_device;
+    const guidDevice = history.guid_device;
     const descript = history.guid_device;
-  const status = history.value == 1 ? "Aktif" : "Non-Aktif";
+    const status = history.value == 1 ? "Aktif" : "Non-Aktif";
 
     return (
       <div key={index} className="p-6 mt-16">
@@ -66,8 +67,8 @@ const Banner = () => {
           status={status}
           contenttable={<HistoryTable tabel={tabel} />}
           content={
-            <div className="h-[18em] w-full">
-              <MapContainer center={[deviceData.latitude, deviceData.longitude]} zoom={11} style={{ height: '100%', width: '100%', borderRadius: '6px' }}>
+            <div className="h-[20em] w-full">
+              <MapContainer center={[deviceData.latitude, deviceData.longitude]} zoom={12} style={{ height: '100%', width: '100%', borderRadius: '6px' }}>
                 <TileLayer
                   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
@@ -92,12 +93,9 @@ const Banner = () => {
   return (
     <div className="relative">
       {loading ? (
-        <div className="flex justify-center">
-          <svg className="animate-spin h-5 w-5 text-gray-700" viewBox="0 0 24 24">
-            <circle className="opacity-25" cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="4"></circle>
-            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12z"></path>
-          </svg>
-        </div>
+        <div className="flex justify-center items-center h-screen">
+          <l-tailspin size="50" stroke="5" speed="0.9" color="gray"></l-tailspin>
+      </div>
       ) : error ? (
         <div>{error}</div>
       ) : (

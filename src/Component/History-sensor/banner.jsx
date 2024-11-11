@@ -2,20 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getDataHistoryType, getDataDeviceByGuid } from "../../Api/service/service";
 import Card from './card';
-import { ClockCounterClockwise, Calendar } from "@phosphor-icons/react";
 import TablePagination from '@mui/material/TablePagination';
-import TableContainer from '@mui/material/TableContainer';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import TableCell from '@mui/material/TableCell';
 import Modal from '../History-Camera/modal';
-import Table from '@mui/material/Table';
-import Paper from '@mui/material/Paper';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 const columns = [
-  { id: 'tanggal', label: 'Tanggal', minWidth: 170 },
-  { id: 'waktu', label: 'Waktu', minWidth: 100 },
+  { id: 'tanggal', label: 'Tanggal & Waktu', minWidth: 170 },
   { id: 'status', label: 'Status', minWidth: 170 },
 ];
 
@@ -36,26 +31,25 @@ const Banner = () => {
       try {
         const deviceResponse = await getDataDeviceByGuid(guid_device);
         setDeviceData(deviceResponse.data);
+
         setFormattedDate(new Date(deviceResponse.data.updatedAt).toLocaleDateString("id-ID", {
           year: "numeric",
           month: "long",
           day: "numeric",
         }));
-
         if (deviceResponse.data.type === "Sensor") {
-          await fetchHistoryData("2024-09-01", "2024-09-30");
+          await fetchHistoryData(startDate || "2024-09-01", endDate || "2024-09-30");
         }
       } catch (error) {
         setError("Failed to fetch device data.");
       }
     };
-
     fetchDeviceData();
-  }, [guid_device]);
+  }, [guid_device, startDate, endDate]);
 
   const fetchHistoryData = async (start, end) => {
     try {
-      const tableResponse = await getDataHistoryType(1, 10, guid_device, start, end);
+      const tableResponse = await getDataHistoryType(1, rowsPerPage, guid_device, start, end);
       setTableData(Array.isArray(tableResponse.data.data) ? tableResponse.data.data : []);
     } catch (error) {
       setError("Failed to fetch history data.");
@@ -68,7 +62,6 @@ const Banner = () => {
   const handleDateSelection = (start, end) => {
     setStartDate(start);
     setEndDate(end);
-    fetchHistoryData(start || "2024-09-01", end || "2024-09-30");
     handleCloseModal();
   };
 
@@ -78,96 +71,93 @@ const Banner = () => {
     setPage(0);
   };
 
-  const renderTableRows = () => {
-    return tableData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((tableItem, index) => {
-      const formattedDate = new Date(tableItem.datetime).toLocaleDateString("id-ID");
-      const formattedTime = new Date(tableItem.datetime).toLocaleTimeString("sv-SE", {
-        hour: "2-digit",
-        minute: "2-digit",
-      });
-      const status = Number(tableItem.value) === 1 ? "Aktif" : "Non-aktif";
-      
-      return (
-        <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-          <TableCell align="left" >{formattedDate}</TableCell>
-          <TableCell align="left" >{formattedTime}</TableCell>
-          <TableCell align="left" >{status}</TableCell>
-        </TableRow>
-      );
-    });
-  };
-
   return (
-    <div className="p-4 transition-all duration-300 ease-in-out">
-      <Card
-        Content1={
-          <div className="p-4 bg-white rounded-lg shadow-md border border-gray-200 relative transition-all duration-300 ease-in-out">
-            <div className="text-center mb-2">
-              <h1 className="text-2xl font-bold text-gray-900">{deviceData .name}</h1>
-              <p className="text-gray-600 text-semibold text-sm">
-                Catatan histori lengkap - tanggal - waktu - status sensor
-              </p>
-            </div>
-          </div>
-        }
-        Content2={
-          <div className="flex items-center justify-between mb-6 transition-all duration-300 ease-in-out">
-            <div className="flex items-center space-x-2">
+    <div className="bg-slate-100 min-h-screen w-full p-8">
+      <div className="flex items-center mb-6">
+        <a href="#" className="text-gray-600 hover:text-gray-800">
+          <FontAwesomeIcon icon={faArrowLeft} className="mr-2 mt-2" />
+        </a>
+        <h1 className="text-2xl font-semibold text-gray-900">Sensor History</h1>
+      </div>
+
+      <div className="bg-white rounded-lg shadow-md border border-gray-200 hover:shadow-sm transition-all">
+        <Card
+          Content1={
+            <div className="mb-4 flex justify-between">
+              <div>
+                <h1 className="text-xl font-semibold text-gray-900">{deviceData.name}</h1>
+                <p className="text-gray-500 text-sm">View device activity records.</p>
+              </div>
               <button
                 onClick={handleOpenModal}
-                className="flex items-center px-4 py-1 bg-white text-sm text-gray-500 border border-gray-300 rounded-lg shadow-sm hover:bg-gray-100"
+                className="mt-4 inline-flex items-center bg-gray-600 text-white text-sm font-medium px-4 py-2 rounded-lg shadow hover:bg-gray-700 transition"
               >
-                <Calendar size={24} weight="duotone" className="mr-1" />
-                {startDate && endDate ? (
-                  `${new Date(startDate).toLocaleDateString('id-ID')} - ${new Date(endDate).toLocaleDateString('id-ID')}`
-                ) : (
-                  'pilih tanggal...'
-                )}
+                Filter Tanggal
               </button>
             </div>
-            <div className="bg-white p-2 px-4 rounded-lg shadow-md flex items-center text-gray-700 text-sm">
-              <ClockCounterClockwise size={18} color="#094462" weight="duotone" className="mr-1" />
-              <span>
-                Today {new Date().toLocaleDateString('id-ID')}
-              </span>
-            </div>
-          </div>
-        }        
-        CardContent3={
-          <Paper className="overflow-hidden w-full transition-all duration-300 ease-in-out">
-            <TableContainer className="max-h-[400px]">
-              <Table stickyHeader aria-label="sticky table">
-                <TableHead>
-                  <TableRow>
-                    {columns.map((column) => (
-                      <TableCell key={column.id} style={{ fontSize: '14px', fontWeight: 'bold' }}>
-                        {column.label}
+          }
+         CardContent3={
+          <div className="overflow-hidden rounded-lg border border-gray-200 transition-all">
+            <table className="min-w-full bg-white rounded-lg shadow-md">
+              <thead>
+                <tr className="border-b text-gray-900 text-left text-sm">
+                  {columns.map((column) => (
+                    <th key={column.id} className="py-3 px-6 font-medium">
+                      {column.label}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {tableData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((tableItem, index) => {
+                  const status = Number(tableItem.value) === 1 ? "On" : "Off";
+                  const waktu = tableItem.datetime;
+                  return (
+                    <TableRow
+                      hover
+                      role="checkbox"
+                      tabIndex={-1}
+                      key={index}
+                      className="transition duration-300 ease-in-out hover:bg-gray-100"
+                    >
+                      <TableCell align="left" className="py-3 px-6">
+                        {waktu}
                       </TableCell>
-                    ))}
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {renderTableRows()}
-                </TableBody>
-              </Table>
-            </TableContainer>
-            <TablePagination
-              rowsPerPageOptions={[10, 20, 50]}
-              component="div"
-              count={tableData.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-            />
-          </Paper>
+                      <TableCell align="left" className="py-3 px-6">
+                      <span
+                        className={`px-3 py-1 ${status === "On" ? "text-blue-500" : "text-red-500"}`}
+                      >
+                        {status}
+                      </span>
+                    </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
         }
-      />
+        />
+        <div className="p-2 mr-4 flex justify-end transition-all">
+          <TablePagination
+            rowsPerPageOptions={[10, 20, 50]}
+            component="div"
+            count={tableData.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </div>
+      </div>
+
       <Modal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
-        onDateSelect={(start, end) => handleDateSelection(start, end)}
+        onDateSelect={handleDateSelection}
       />
+
+      {error && <p className="text-red-500 mt-4">{error}</p>}
     </div>
   );
 };
