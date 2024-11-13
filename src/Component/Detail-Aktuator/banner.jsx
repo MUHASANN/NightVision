@@ -56,7 +56,7 @@ const Banner = () => {
     const status = history.value == 1 ? "Aktif" : "Non-Aktif";
 
     return (
-      <div key={index} className="p-6 mt-16">
+      <div key={index}>
         <Card
           guid_device={guidDevice}
           type={deviceData.type}
@@ -67,7 +67,7 @@ const Banner = () => {
           status={status}
           contenttable={<HistoryTable tabel={tabel} />}
           content={
-            <div className="h-[20em] w-full">
+            <div className="h-[18em] w-full">
               <MapContainer center={[deviceData.latitude, deviceData.longitude]} zoom={12} style={{ height: '100%', width: '100%', borderRadius: '6px' }}>
                 <TileLayer
                   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

@@ -24,8 +24,8 @@ const BarChart = () => {
           'rgba(255, 159, 64, 0.6)',  // Orange
           'rgba(255, 99, 71, 0.6)'    // Red
         ],
-        borderColor: 'rgba(55, 65, 81, 1)', // gray-700 for bar borders
-        borderWidth: 1, // Optional: Add border to each bar
+        borderColor: 'rgba(55, 65, 81, 1)',
+        borderWidth: 1,
       },
     ],
   };
@@ -45,20 +45,20 @@ const BarChart = () => {
       x: {
         grid: {
           display: true,
-          color: 'rgba(55, 65, 81, 0.3)', // gray-900 for grid lines with some transparency
+          color: 'rgba(55, 65, 81, 0.3)',
         },
         ticks: {
-          color: '#1F2937', // gray-900 for X-axis tick labels (dates)
+          color: '#1F2937',
         },
       },
       y: {
         grid: {
           display: true,
-          color: 'rgba(55, 65, 81, 0.3)', // gray-900 for grid lines with some transparency
+          color: 'rgba(55, 65, 81, 0.3)',
         },
         ticks: {
           beginAtZero: true,
-          color: '#1F2937', // gray-900 for Y-axis tick labels
+          color: '#1F2937',
         },
       },
     },

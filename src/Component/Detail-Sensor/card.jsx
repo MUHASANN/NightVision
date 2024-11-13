@@ -5,18 +5,18 @@ import { MapPinArea, Broadcast, CalendarDots, ClockCounterClockwise, Info } from
 
 const Card = ({ type, guid_device, title, description, date, content, contenttable, status }) => {
   return (
-    <div className="bg-slate-100 w-full p-6">
+    <div className="bg-slate-100 w-full p-10 mt-16">
       <div className="flex flex-wrap lg:flex-nowrap gap-6">
 
         {/* Left Section */}
         <div className="w-full lg:w-2/3 space-y-4">
-          <div className="p-6 bg-white rounded-lg shadow-lg transition-all hover:shadow-md">
+          <div className="py-4 px-6 bg-white rounded-lg shadow-lg transition-all hover:shadow-md">
             <div className="flex justify-between items-center">
               <div className="flex items-center space-x-4">
                 <Broadcast size={48} color="#094462" weight="duotone" />
                 <div>
-                  <h1 className="text-xl font-semibold text-gray-800 mb-1">{title}</h1>
-                  <p className="text-gray-500 text-sm">Guid Perangkat | {description}</p>
+                  <h1 className="text-xl font-semibold text-gray-800 ml-1">{title}</h1>
+                  <p className="mt-2 text-sm text-gray-600 bg-gray-100 p-2 rounded-lg">Guid Perangkat | {description}</p>
                 </div>
               </div>
               <Link

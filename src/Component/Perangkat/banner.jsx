@@ -3,6 +3,7 @@ import Card from "./card";
 import { FaSearch, FaAngleRight, FaAngleLeft } from "react-icons/fa";
 import { getDataDeviceByCompany, getDataDevice } from "../../Api/service/service";
 import Radio from '@mui/material/Radio';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const ITEMS_PER_PAGE = 8;
 const CATEGORIES = ["Camera", "Sensor", "Aktuator"];
@@ -14,13 +15,11 @@ const Banner = () => {
   const [filteredData, setFilteredData] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("Camera");
   const [loading, setLoading] = useState(true);
-
-  // Fetch data when selectedCategory changes
+ 
   useEffect(() => {
     getData();
   }, [selectedCategory]);
 
-  // Filter data based on search term
   useEffect(() => {
     filterData();
   }, [searchTerm, data]);
@@ -77,9 +76,9 @@ const Banner = () => {
 
   return (
     <div className="bg-slate-100 min-h-screen w-full p-0 m-0">
-    <div className="p-6 mt-16">
+      <div className="p-6 mt-16">
 
-        <div className="bg-white rounded-lg shadow-md border-gray-200 p-6 mb-6 flex flex-col md:flex-row justify-between items-center">
+        <div className="bg-white rounded-lg shadow-lg border-gray-200 p-6 mb-6 flex flex-col md:flex-row justify-between items-center">
           <div className="relative mt-4 md:mt-0 md:w-2/5">
             <input
               type="text"
@@ -94,40 +93,42 @@ const Banner = () => {
           {/* Radio buttons with custom colors */}
           <div className="flex mr-4 space-x-4">
             <div className="flex item-center font-medium">
-                <Radio{...controlProps('Camera')} color="primary"/>
-                  <p className="mt-2 text-gray-600">Camera</p>
-              </div>
+              <Radio {...controlProps('Camera')} color="primary"/>
+              <p className="mt-2 text-gray-600">Camera</p>
+            </div>
             <div className="flex item-center font-medium">
-              < Radio{...controlProps('Sensor')} color="error"/>
-                <p className="mt-2  text-gray-600">Sensor</p>
-              </div>
-            <div className="flex item-center font-medium">
-              <Radio{...controlProps('Aktuator')} color="success"/>
-                <p className="mt-2 text-gray-600">Aktuator</p>
+              <Radio {...controlProps('Sensor')} color="error"/>
+              <p className="mt-2 text-gray-600">Sensor</p>
+            </div>
+            < div className="flex item-center font-medium">
+              <Radio {...controlProps('Aktuator')} color="success"/>
+              <p className="mt-2 text-gray-600">Aktuator</p>
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-          {loading
-            ? Array.from({ length: ITEMS_PER_PAGE }).map((_, index) => (
-                <div
-                  key={index}
-                  className="p-6 bg-white rounded-lg animate-pulse flex flex-col space-y-3"
-                >
-                  <div className="h-6 bg-gray-200 rounded w-3/4"></div>
-                  <div className="h-5 bg-gray-200 rounded w-1/2"></div>
-                </div>
-              ))
-            : currentCards.map((card) => (
-                <Card
-                  key={card.guid}
-                  guid_device={card.deviceGuid}
-                  type={card.type}
-                  title={card.name}
-                  description={card.deviceGuid}
-                />
-              ))}
+        {/* Cards Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-6">
+          {loading ? (
+            <div className="flex justify-center items-center w-full col-span-4">
+              <CircularProgress />
+            </div>
+          ) : currentCards.length > 0 ? (
+            currentCards.map((card) => (
+              <Card
+                key={card.guid}
+                guid_device={card.deviceGuid}
+                type={card.type}
+                title={card.name}
+                description={card.deviceGuid}
+                className="shadow-lg w-full h-64 bg-white rounded-lg p-4 flex flex-col justify-between"
+              />
+            ))
+          ) : (
+            <div className="col-span-4 text-center text-gray-600">
+              No devices found
+            </div>
+          )}
         </div>
 
         {/* Pagination */}
@@ -156,20 +157,45 @@ const Banner = () => {
             </button>
           </div>
 
+          {/* Page Number Buttons */}
           <div className="flex space-x-2">
-            {[...Array(totalPages)].map((_, index) => (
+            {totalPages > 4 && currentPage > 3 && (
+              <span className="px-3 py-1">...</span>
+            )}
+            {[...Array(Math.min(totalPages, 4))].map((_, index) => {
+              const pageIndex = index + Math.max(0, currentPage - 3);
+              if (pageIndex < totalPages) {
+                return (
+                  <button
+                    key={pageIndex}
+                    onClick={() => setCurrentPage(pageIndex + 1)}
+                    className={`px-3 py-1 rounded-md transition duration-200 ${
+                      currentPage === pageIndex + 1
+                        ? "bg-blue-500 text-white"
+                        : "bg-gray-200 text-gray-800 hover:bg-gray-300"
+                    }`}
+                  >
+                    {pageIndex + 1}
+                  </button>
+                );
+              }
+              return null;
+            })}
+            {totalPages > 4 && currentPage < totalPages - 2 && (
+              <span className="px-3 py-1">...</span>
+            )}
+            {totalPages > 4 && currentPage < totalPages - 1 && (
               <button
-                key={index}
-                onClick={() => setCurrentPage(index + 1)}
+                onClick={() => setCurrentPage(totalPages)}
                 className={`px-3 py-1 rounded-md transition duration-200 ${
-                  currentPage === index + 1
+                  currentPage === totalPages
                     ? "bg-blue-500 text-white"
                     : "bg-gray-200 text-gray-800 hover:bg-gray-300"
                 }`}
               >
-                {index + 1}
+                {totalPages}
               </button>
-            ))}
+            )}
           </div>
         </div>
       </div>

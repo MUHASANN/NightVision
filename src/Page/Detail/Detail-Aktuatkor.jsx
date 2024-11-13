@@ -4,7 +4,7 @@ import Banner from "../../Component/Detail-Aktuator/banner";
 
 const DetailAktuator = () => {
     return (
-     <div className="bg-slate-100 h-[40em]">
+     <div className="bg-slate-100">
         <Navbar />
         <Banner />
     </div>

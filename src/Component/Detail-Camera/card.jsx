@@ -5,10 +5,10 @@ import { MapPinArea } from '@phosphor-icons/react';
 
 const Carddetail = ({ guid_device, type, leftcard, leftcard2, rightcard, rightcard2, rightcard3 }) => {
   return (
-    <div className="bg-slate-100 w-full p-0 m-0">
+    <div className="bg-slate-100 w-full p-0 m-0 mt-16 p-1">
       <div className="mt-2 flex flex-col lg:flex-row">
         {/* Left Section */}
-        <div className="w-full lg:w-1/2 ml-[-3em] mr-[-4em] space-y-[-1.5em]">
+        <div className="w-full lg:w-1/2 ml-[-3em] mr-[-4em] space-y-[-1em]">
           <div className="transition-all transform hover:scale-105 p-6">
             {leftcard2}
           </div>
@@ -31,11 +31,11 @@ const Carddetail = ({ guid_device, type, leftcard, leftcard2, rightcard, rightca
           </div>
 
           <div className="flex gap-4">
-            <div className="w-full bg-white rounded-lg h-[6em] shadow-md hover:shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 flex items-center justify-between p-4">
+            <div className="w-full bg-white rounded-lg h-[7em] shadow-lg hover:shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 flex items-center p-4">
               <div className="flex-1">{rightcard}
               </div>
             </div>
-            <div className="w-full bg-white rounded-lg h-[6em] shadow-md hover:shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 p-4">
+            <div className="w-full bg-white rounded-lg h-[7em] shadow-lg hover:shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 flex items-center p-4">
               {rightcard2}
             </div>
           </div>

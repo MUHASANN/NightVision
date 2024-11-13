@@ -11,7 +11,7 @@ const api = axios.create({
 
 const apiHistory = axios.create({
   baseURL: apiUrlHistory,
-});
+}); 
 
 export const getDataDeviceByCompany = async () => {
   try {
@@ -63,9 +63,29 @@ export const getDataHistoryType = async (page, limit, guid, startdate, enddate) 
   }
 };
 
-export const getDataStatistik = async (startdate, enddate) => {
+export const getDataStatistik = async () => {
   try {
-    const response = await apiHistory.get(`/reports/statistics?companyGuid=${company}startDate=${startdate}&endDate=${enddate}`);
+    const response = await apiHistory.get(`/reports/statistics?companyGuid=${company}&startDate&endDate`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching history data:", error)
+    throw error;
+  }
+};
+
+export const getDataLaporanOfficer = async (page, limit, type) => {
+  try {
+    const response = await apiHistory.get(`/reports/company?companyGuid=${company}&page=${page}&limit=${limit}&type=${type}&startDate&endDate`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching history data:", error)
+    throw error;
+  }
+};
+
+export const getDataLaporanAI = async (page, limit, type) => {
+  try {
+    const response = await apiHistory.get(`/reports/company?companyGuid=${company}&page=${page}&limit=${limit}&type=${type}&startDate&endDate`);
     return response.data;
   } catch (error) {
     console.error("Error fetching history data:", error)

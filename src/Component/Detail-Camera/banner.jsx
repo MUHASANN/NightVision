@@ -84,7 +84,7 @@ const Banner = () => {
     const deviceDate = history.datetime;
 
     return (
-      <div key={guidDevice || index} className='p-1 mt-16'>
+      <div key={guidDevice || index}>
         <Carddetail
           key={guidDevice || index}
           guid_device={guidDevice}
@@ -135,7 +135,7 @@ const Banner = () => {
                 <SecurityCamera size={24} color="#004462" weight="duotone" className="mr-2" />
                 <h2 className="font-semibold text-gray-900 mb-2">{device.name}</h2>
               </div>
-              <p className="bg-gray-100 p-2 rounded-lg text-gray-500 text-sm hover:shadow-sm">Guid Perangkat | {deviceDescription}</p>
+              <p className="w-96 bg-gray-100 p-2 rounded-lg text-gray-500 text-sm hover:shadow-sm">Guid Perangkat | {deviceDescription}</p>
             </div>
           }
           rightcard2={
@@ -144,11 +144,11 @@ const Banner = () => {
                 <CalendarDots size={24} color="#094462" weight="duotone" className="mr-1" />
                 <h2 className="font-semibold text-gray-900 mb-2">Tanggal Registrasi:</h2>
               </div>
-              <p className="bg-gray-100 p-2 rounded-lg text-gray-500 text-sm hover:shadow-sm">{formattedDates}</p>
+              <p className="w-96 bg-gray-100 p-2 rounded-lg text-gray-500 text-sm hover:shadow-sm">{formattedDates}</p>
             </div>
           }
           rightcard3={
-            <div className="h-[19.5em] w-full">
+            <div className="h-[18em] w-full">
               <MapContainer
                 center={[device.latitude, device.longitude]}
                 zoom={11}

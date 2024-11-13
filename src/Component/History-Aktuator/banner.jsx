@@ -73,14 +73,7 @@ const Banner = () => {
 
   return (
     <div className="bg-slate-100 min-h-screen w-full p-8">
-      <div className="flex items-center mb-6">
-        <a href="#" className="text-gray-600 hover:text-gray-800">
-          <FontAwesomeIcon icon={faArrowLeft} className="mr-2 mt-2" />
-        </a>
-        <h1 className="text-2xl font-semibold text-gray-900">Aktuator History</h1>
-      </div>
-
-      <div className="bg-white rounded-lg shadow-md border border-gray-200 hover:shadow-sm transition-all">
+      <div className="mt-16 bg-white rounded-lg shadow-md border border-gray-200 hover:shadow-sm transition-all">
         <Card
           Content1={
             <div className="mb-4 flex justify-between">

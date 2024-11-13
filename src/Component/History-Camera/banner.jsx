@@ -41,7 +41,7 @@ const Banner = () => {
     try {
       const deviceResponse = await getDataDeviceByGuid(guid_device);
       setDeviceData(deviceResponse.data);
-      const historyResponse = await getDataHistoryType(1, 1000, guid_device, startDate, endDate);
+      const historyResponse = await getDataHistoryType(1, 48, guid_device, startDate, endDate);
       const history = historyResponse?.data?.data || [];
       setHistoryData(history);
       if (history.length === 0) {
@@ -67,8 +67,8 @@ const Banner = () => {
 
   return (
     <div className="bg-slate-100 min-h-screen w-full p-0 m-0">
-      <div className="p-6">
-        <div className="bg-white shadow-md p-2 rounded-lg hover:shadow-sm transition duration-300 mb-4">
+      <div className="p-6 mt-16">
+        <div className="bg-white shadow-lg p-2 rounded-lg hover:shadow-dm transition duration-300 mb-4">
           <div className="flex justify-center items-center mb-2">
             <h1 className="mt-4 text-2xl font-bold text-gray-800">{deviceData.name || "Device Name"}</h1>
           </div>
@@ -83,7 +83,7 @@ const Banner = () => {
           <div className="flex items-center">
             <button
               onClick={handleOpenModal}
-              className="bg-white shadow-md text-md text-gray-500 text-sm p-2 px-4 rounded-lg transition duration-300 hover:shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-200"
+              className="bg-white shadow-lg text-md text-gray-500 text-sm p-2 px-4 rounded-lg transition duration-300 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-gray-200"
               aria-label="Pilih Tanggal"
             >
               <div className="flex">

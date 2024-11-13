@@ -29,7 +29,7 @@ const Card = ({ guid_device, type, title, description, highlighted = false, onCl
           <h3 className="text-xl font-semibold text-black mb-2">{title}</h3>
         <div className="flex item-center">
           {renderIcon()}
-          <p className="text-black mb-4">{description}</p>
+          <p className="text-black mb-">{description}</p>
         </div>
       </div>
     </Link>
